@@ -69,10 +69,11 @@ function rcEnc(A,cut){
 	for(Q.pairs=H[primes[H.hN=15]-1]=0;++n<256;)if(E[n])E[n]=cs++;
 	for(m=n=nc=cs;o--;)C[o]=E[A[o]];
 	for(;T[--m]=m;);
-	for(initRDS(H,Q,C,P,N,cut&3);m=getMaxPair(Q);e-=replaceMaximalRepeat(H,Q,C,P,N,m,n++))
-		findMaximalRepeat(Q,C,P,N,m),
-		addMaximalRepeatAsNewRule(S,C,P,m,n);
-	Q=H=N=0;
+	for(initRDS(H,Q,C,P,N,cut&3);m=getMaxPair(Q);f?++n:--S.length)
+		findMR(Q,C,P,N,m),
+		addMRrule(S,C,P,m,n),
+		e-=f=replaceMR(H,Q,C,P,N,m,n);
+	f=Q=H=N=0;
 	eB(5,d=l2b(e)+1);eB(--d,e^1<<d);eB(1,E[d=0]>-1);
 	for(m=e;n=d<256;eB(e*2-1,n)){
 		for(e=E[d]>-1;e==E[++d]>-1&&d<256;n++);
@@ -131,4 +132,4 @@ function rcDec(A){
 		else if(s<4)c=1+db(F,f+6),f=5;
 		else{for(c=f=0,d=l2b(s-1);c<d&&!db(G,c);)c++;c=1<<c|db2(L[c],c)}
 		for(d=0;r[d++]=S[--s],c--;);S[s++]=n++}
- delete O.e;delete A.d;return O}
+ delete O.e;return O}

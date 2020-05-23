@@ -1,0 +1,8 @@
+<title>test</title>coder<select id=c><option>rc<option>bit</select><input type=checkbox id=o>cut
+<input type=checkbox id=p>unpack<input type=file id=f><p id=s><script src=mr-repair.js></script><script>
+var ls=location.search.slice(1)&3,js=["rc","cbt"],coder=["rcEnc","rcDec","cbtEnc","cbtDec"];
+c.options[ls|=0].selected=c.options[ls].defaultSelected=!0;
+document.write('<\script type="text/javascript" src="mr-',js[ls],'.js"></\script>');
+f.onchange=function(f,n,b){b=p.checked;with(new FileReader)readAsArrayBuffer(f=this.files[0]),n=f.name+(b?"":".rp"),onload=function(a,t){t=new Date,s.innerHTML+='<a href="'+URL.createObjectURL(new Blob([a=new Uint8Array(self[coder[c.selectedIndex*2+b]](new Uint8Array(result),o.checked))]))+'"download="'+n+'">'+n+'</a>('+f.size+' to '+a.length+' in '+(new Date-t)+'ms) '}};
+c.onchange=function(i){i=this.selectedIndex;location.href=location.href.replace(/\?.*/,"")+"?"+(i||"")}
+</script>

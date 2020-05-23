@@ -41,9 +41,10 @@ function cbtEnc(A,cut){
 	for(Q.max=Math.sqrt(n)+.5|0;n--;N[n]=P[n]=m)T[A[n]]=1;
 	for(Q.pairs=H[primes[H.hN=15]-1]=0;++n<256;)if(T[n])T[n]=cs++;
 	for(n=nc=cs;o;)C[--o]=T[A[o]];
-	for(initRDS(H,Q,C,P,N,cut&3);m=getMaxPair(Q);e-=replaceMaximalRepeat(H,Q,C,P,N,m,n++))
-		findMaximalRepeat(Q,C,P,N,m),
-		addMaximalRepeatAsNewRule(S,C,P,m,n);
+	for(initRDS(H,Q,C,P,N,cut&3);m=getMaxPair(Q);l?++n:--S.length)
+		findMR(Q,C,P,N,m),
+		addMRrule(S,C,P,m,n),
+		e-=l=replaceMR(H,Q,C,P,N,m,n);
 	O.e(1,T[H=N=Q=n=0]>-1);O.e(5,l=l2b(e)+1);
 	for(O.e(--l,e^1<<l);l=n<256;O.e(m*2-1,l)){
 		for(m=T[n]>-1;m==T[++n]>-1&&n<256;l++);

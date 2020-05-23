@@ -1,13 +1,3 @@
-/*****************************************
-	MR-RePair 2019.9.15
-******************************************
-A variation of RePair algorithm using maximal repeats.
-This program is based on Satoshi Yoshida's RePair implementation.
-Yoshida's implementation is originaly come from Shirou Maruyama's RePair implementation.
-This is used for the experiments appered in the paper of DCC2019, entitled
-"MR-RePair: Grammar Compression based on Maximal Repeats".
-Please refer the paper for the datail, and main.c for the copyright and usage.
-******************************************/
 var primes=function(a,b){for(;b;)a[--b]+=8<<b;return a}([3,3,5,3,3,27,9,9,5,3,27,43,3,45,29,3,21,7,17,15,9,43,35,15,29,3,11,85],28),log2=function(A,a){for(;a<255;)A[++a]=A[a>>1]+1;return A}([0],0);
 function l2b(x,l){l=-1;
 	if(x>255){l+=8,x>>=8;
@@ -115,7 +105,7 @@ function replaceMR(H,Q,C,P,N,mr,n){
 		if(lp<u)
 			hitDown(H,Q,C,P,N,lp),
 			removeLinkSQ(P,N,lp,u);
-		for(;i<c;i=j)
+		if(p<=e||r)for(;i<c;i=j)
 			j=rightPosSQ(C,P,i),
 			hitDown(H,Q,C,P,N,i),
 			removeLinkSQ(P,N,i,u),
@@ -123,6 +113,7 @@ function replaceMR(H,Q,C,P,N,mr,n){
 		if(rp<u)
 			hitDown(H,Q,C,P,N,c),
 			removeLinkSQ(P,N,c,u);
+		if(p>e&&!r)break; // hit only 1 time
 		C[c]=-1;C[b]=n;
 		if(rp<u)
 			if(b+2^rp)P[b+1]=rp,N[b+1]=P[rp-1]=u,N[rp-1]=b;
