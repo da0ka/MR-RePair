@@ -1,27 +1,27 @@
 /*****************************************
-	MR-RePair(range coder) 2019.9.10
+	MR-RePair(range coder) 2020.7.17
 ******************************************
 Re-Pair is the name of the algorithm and the software which implements the recursive pairing algorithm. Its corresponding decompressor is Des-Pair.
 
  usage:
 	rcEnc(A,cut)
-	@A	:ˆ³kŒ³”z—ñ	{n|0..255}
-	@cut:‰‘–¸‚ÌŽž3˜A’·‚ð‚Ç‚¤‚·‚é‚©
-		0:–³Ž‹, 1:2•¶Žš–ÚÈ—ª, 2:1•¶Žš–ÚÈ—ª
-	•Ô’l	:ˆ³k”z—ñ	{n|0..255}
+	@A	:åœ§ç¸®å…ƒé…åˆ—	{n|0..255}
+	@cut:åˆèµ°æŸ»ã®æ™‚3é€£é•·ã‚’ã©ã†ã™ã‚‹ã‹
+		0:ç„¡è¦–, 1:2æ–‡å­—ç›®çœç•¥, 2:1æ–‡å­—ç›®çœç•¥
+	è¿”å€¤	:åœ§ç¸®é…åˆ—	{n|0..255}
 
 	rcDec(A)
-	@A	:ˆ³k”z—ñ	{n|0..255}
-	•Ô’l	:•œ†”z—ñ	{n|0..255}
+	@A	:åœ§ç¸®é…åˆ—	{n|0..255}
+	è¿”å€¤	:å¾©å·é…åˆ—	{n|0..255}
 ******************************************/
 function rcEnc(A,cut){
 	function eb(i,b,P){
 		var p=(P[i]||(P[i]=0x80000000))>>>9,r=(x>>>12)*(p>>11||1);
 		b?x=r:(x-=r,y+=r);
 		for(P[i]+=((b<<23)-p)*Y[r=P[i]&127]&-128|r<127;x<16777216;x*=256){
-			if((y^0xff000000)>>>0>0xffffff){
-				O[o++]=B+(r=y/0x100000000)&255;
-				for(r+=255;N;N--)O[o++]=r&255;
+			if(255>y>>>24){
+				r=0xffffffff<y,O[o++]=255&r+B;
+				for(r+=255;N;N--)O[o++]=255&r;
 				B=y>>>24}
 			else++N;
 			y=y<<8>>>0}
@@ -36,9 +36,9 @@ function rcEnc(A,cut){
 		for(;i;){r=x>>>=1;
 			if(s>>>--i&1)y+=r;
 			for(;x<16777216;x*=256){
-				if((y^0xff000000)>>>0>0xffffff){
-					O[o++]=B+(r=y/0x100000000)&255;
-					for(r+=255;N;N--)O[o++]=r&255;
+				if(255>y>>>24){
+					r=0xffffffff<y,O[o++]=255&r+B;
+					for(r+=255;N;N--)O[o++]=255&r;
 					B=y>>>24}
 				else++N;
 				y=y<<8>>>0}
@@ -62,7 +62,7 @@ function rcEnc(A,cut){
 			}d-=n;T[c]=nc++
 		}
 	}
-	for(var d,e=A.length,f=32,m=1/0,n=e,x=-1>>>0,y=128,B=0,o=e,cs=0,nc,nl=0,C=Array(n),P=Array(n),N=Array(n),O=[],H=[],Q=[],S=[],T=[],E=[],F=[],G=[],L=[],Y=[];y;)Y[--y]=4096/(y+96)|0;
+	for(var d,e=A.length,f=32,m=1/0,n=e,x=-1>>>0,y=128,z=e,B=0,o=e,cs=0,nc,nl=0,C=Array(n),P=Array(n),N=Array(n),O=[],H=[],Q=[],S=[],T=[],E=[],F=[],G=[],L=[],Y=[];y;)Y[--y]=4096/(y+96)|0;
 	if(!n)return O;
 	for(;f;)L[--f]=[];
 	for(Q.max=Math.sqrt(n)+.5|0;n--;N[n]=P[n]=m)E[A[n]]=1;
@@ -80,56 +80,57 @@ function rcEnc(A,cut){
 		if(n<256)e=l2b(+n)+1;else e=5,n=0}
 	for(n=E.length=0;m;)if(~C[n])d=e=0,rw(C[n++]),eb(f,0,F),f=e<2?2:3,m--;else n=P[n];
 	for(n=5;n--;y=y<<8>>>0)
-		if((y^0xff000000)>>>0>0xffffff){
-			O[o++]=B+(m=y/0x100000000)&255;
-			for(m+=255;N;N--)O[o++]=m&255;
+		if(255>y>>>24){
+			f=0xffffffff<y,O[o++]=255&f+B;
+			for(f+=255;N;N--)O[o++]=255&f;
 			B=y>>>24}
 		else++N;
-	return O}
-
+	return O
+}
 function rcDec(A){
- function dB(i,c,b){
-	for(c=0;i--;c+=c-b){
-		x>>>=1;b=y-x>>>31;
-		for(y-=x&--b;x<16777216;x*=256)y=(y<<8|A[a++])>>>0}
-	return c}
+	function dB(i,c,b){
+		for(c=0;i--;c+=c-b){
+				x>>>=1;b=y-x>>>31;
+				for(y-=x&--b;x<16777216;x*=256)y=(y<<8|A[a++])>>>0}
+		return c}
 
- function db(P,c){
-	var p=(P[c]||(P[c]=0x80000000))>>>9,r=(x>>>12)*(p>>11||1),b=1;
-	y<r?x=r:(x-=r,y-=r,b=0);
-	for(P[c]+=((b<<23)-p)*Y[r=P[c]&127]&-128|r<127;x<16777216;x*=256)y=(y<<8|A[a++])>>>0;
-	return b}
+	function db(P,c){
+		var p=(P[c]||(P[c]=0x80000000))>>>9,r=(x>>>12)*(p>>11||1),b=1;
+		y<r?x=r:(x-=r,y-=r,b=0);
+		for(P[c]+=((b<<23)-p)*Y[r=P[c]&127]&-128|r<127;x<16777216;x*=256)y=(y<<8|A[a++])>>>0;
+		return b}
 
- function db2(P,i,c){
-	for(;i--;)c|=db(P,i)<<i;return c}
+	function db2(P,i,c){
+		for(;i--;)c|=db(P,i)<<i;return c}
 
- function db3(P,i,c,d){
-	for(c=1,d=i;i--;)c+=c+db(P,c);return c^1<<d}
+	function db3(P,i,c,d){
+		for(c=1,d=i;i--;)c+=c+db(P,c);return c^1<<d}
 
- for(var a=0,c,d,e=128,f=32,l,m,n=0,o,r,s,x=-1>>>0,y,z,O=[],E=[],F=[],G=[],L=[],R=[],S=[],T=[],Y=[];a<4;)y=(y<<8|A[a++])>>>0;
- for(c=dB(5)-1;e;)Y[--e]=4096/(e+96)|0;
- if(c<0)return O;
- for(z=dB(c)|1<<c,l=dB(1);e<256;l^=1){
-	for(o=0;o<9&&!dB(1);)o++;
-	for(o=o<9?1<<o|dB(o):256;o--;e++)if(l)T[n++]=e}
- if(!n){for(;++o<z;)O[o]=dB(8);return O}
- for(;f;)L[--f]=[];
+	for(var a=0,c,d,e=128,f=32,l,m,n=0,o,r,s,x=-1>>>0,y,z,O=[],E=[],F=[],G=[],L=[],R=[],S=[],T=[],Y=[];a<4;)y=(y<<8|A[a++])>>>0;
+	for(c=dB(5)-1;e;)Y[--e]=4096/(e+96)|0;
+	if(c<0)return O;
+	for(z=(dB(c)|1<<c)>>>0,l=dB(1);e<256;l^=1){
+		for(o=0;o<9&&!dB(1);)o++;
+		for(o=o<9?1<<o|dB(o):256;o--;e++)if(l)T[n++]=e}
+	if(!n){for(;++o<z;)O[o]=dB(8);return O}
+	for(;f;)L[--f]=[];
 
- O.e=function(R,s,r){
-	if(s<m)return this[++o]=T[s];
-	for(r=R[s],s=r.length;s;)this.e(R,r[--s])};
+	O.e=function(R,s,r){
+		if(s<m)return this[++o]=T[s];
+		for(r=R[s],s=r.length;s;)this.e(R,r[--s])};
 
- for(m=n;z--;)
-	for(e=s=0;;)
-	 if(db(F,f)){f=1;
-		for(e++;n>>l;)l++;
-		if((c=db3(E,l-1))>=(d=(1<<l)-n))c+=c+dB(1)-d;
-		O.e(R,S[s++]=c)}
-	 else{
-		if(!--e){f=2;break}
-		if(s<2){f=3;break}r=R[n]=[];
-		if(s<3)c=1,f=4;
-		else if(s<4)c=1+db(F,f+6),f=5;
-		else{for(c=f=0,d=l2b(s-1);c<d&&!db(G,c);)c++;c=1<<c|db2(L[c],c)}
-		for(d=0;r[d++]=S[--s],c--;);S[s++]=n++}
- delete O.e;return O}
+	for(m=n;z--;)
+		for(e=s=0;;)
+			if(db(F,f)){f=1;
+				for(e++;n>>l;)l++;
+				if((c=db3(E,l-1))>=(d=(1<<l)-n))c+=c+dB(1)-d;
+				O.e(R,S[s++]=c)}
+			else{
+				if(!--e){f=2;break}
+				if(s<2){f=3;break}r=R[n]=[];
+				if(s<3)c=1,f=4;
+				else if(s<4)c=1+db(F,f+6),f=5;
+				else{for(c=f=0,d=l2b(s-1);c<d&&!db(G,c);)c++;c=1<<c|db2(L[c],c)}
+				for(d=0;r[d++]=S[--s],c--;);S[s++]=n++}
+	delete O.e;return O
+}
