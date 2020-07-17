@@ -32,7 +32,7 @@ function cbtEnc(A,cut){
 		}
 	}
 	var b=32,B,e=A.length,l,m=1/0,n=e,z=e,cs=0,nc,nl=0,o=n,H=[],C=Array(n),P=Array(n),N=Array(n),S=[],O=[],Q=[],T=[];
-	if(!n)return done([0,0,0],0,3);
+	if(!n)return[0,0,0];
 	O.e=function(l,n){
 		if(b>l)return B|=n<<(b-=l);
 		b=32-(l-=b);
@@ -70,7 +70,7 @@ function cbtDec(A){
 		for(o=0;o<9&&!A.d(1);++o);
 		for(o=o<9?1<<o|A.d(o):256;o--;e++)if(l)T[n++]=e}
 	if(c<0)return O;
-	if(!n){for(;++o<z;)O[o]=A.d(8);return rate(0,a,a),done(O,a,++o)}
+	if(!n){for(;++o<z;)O[o]=A.d(8);return O}
 
 	O.e=function(R,s,r){
 		if(s<m)return this[++o]=T[s];
