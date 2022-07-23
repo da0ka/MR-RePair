@@ -67,29 +67,25 @@ function cbtDec(A,done,rate){
 		if(l)n|=B>>>b,B<<=l;
 		return n};
 	done=done||function(O){return O};
-	for(var a=0,b=0,B,l=A.d(1),c=A.d(5),d,e=0,f=1,z=c?(A.d(--c)|1<<c)>>>0:0,m,n=0,o,r,s,O=[],R=[],S=[],T=[];e<256;l^=1){
-		for(o=0;o<9&&!A.d(1);++o);
-		for(o=o<9?1<<o|A.d(o):256;o--;e++)if(l)T[n++]=e}
+	for(var a=0,b=0,B,l=A.d(1),c=A.d(5),d=256,e=0,z=c?(A.d(--c)|1<<c)>>>0:0,m,n=0,o,r,s,u,O=[],R=[],S=[],T=[],U=[];e<d;l^=1){
+		for(o=0,c=l2b(d-e);o<c&&!A.d(1);++o);
+		for(o=o<8?1<<o|A.d(o):d;o--;e++)if(l)T[n++]=e}
 	if(!z)return done(O,A.length,0);
 	if(!n){for(;++o<z;)O[o]=A.d(8);return rate(0,a,a),done(O,a,++o)}
-
-	O.e=function(R,s,r){
-		if(s<m)return this[++o]=T[s];
-		for(r=R[s],s=r.length;s;)this.e(R,r[--s])};
-
-	for(m=n;z--;)for(e=s=0;;)
-		if(f||A.d(1)){
-			for(e++;n>>l;)l++;
+	for(m=n;z--;)for(s=0;;)
+		if(!s||A.d(1)){
+			for(;n>>l;)l++;
 			if((c=A.d(l-1))>=(d=(1<<l)-n))c+=c+A.d(1)-d;
-			O.e(R,S[s++]=c);f=0}
+			for(S[s++]=c,u=0;;c=U[--u])
+				if(c<m){O[++o]=T[c];if(!u)break}
+				else for(r=R[c],c=r.length;c;)U[u++]=r[--c]}
 		else{
-			if(f=!--e||s<2)break;
+			if(s<2)break;
 			if(s<3)c=1;
 			else if(s<4)c=1+A.d(1);
 			else{
 				for(c=0,d=l2b(s-1);c<d&&!A.d(1);)c++;
 				c=1<<c|A.d(c)
-			}r=R[n]=[];
-			for(d=0;r[d++]=S[--s],c--;);S[s++]=n++}
-	delete O.e;delete A.d;
-	return rate(0,a=A.length,a),done(O,a,++o)}
+			}for(r=R[n]=[];r[c]=S[--s],c--;);S[s++]=n++}
+	delete A.d;
+	return done(O,A.length,++o)}
